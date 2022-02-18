@@ -1,0 +1,213 @@
+body {
+  --c: 206;
+  --sat: 71%;
+  --lg: 9%;
+
+  --shadow: 0.1em 0.1em 0.4em hsl(186 10% 30%);
+  --shadow-purple: 0.1em 0.1em 0.5em hsl(270, 50%, 40%);
+
+  background: hsl(var(--c), var(--sat), var(--lg));
+  color: hsl(var(--c), 15%, 90%);
+}
+
+a {
+  border-radius: 2em;
+  color: hsl(var(--c), 55%, 70%);
+}
+
+html,
+body,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+form,
+fieldset,
+caption,
+table,
+tr,
+td,
+th,
+address,
+blockquote,
+img {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:after,
+*:before {
+  flex: 1 0 auto; /* safari bugfix */
+  box-sizing: border-box;
+}
+
+button,
+label {
+  cursor: pointer;
+}
+
+body,
+button,
+input,
+table,
+textarea,
+select {
+  font: normal 1em/1.5 "poppins", arial, helvetica, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+h1 {
+  font-size: 2.5em;
+  line-height: 2;
+  text-shadow: var(--shadow);
+}
+
+h1 ~ * {
+  flex-grow: 0;
+  font-size: 1.3rem;
+}
+
+header {
+  display: flex;
+  position: sticky;
+  top: 0;
+  background: var(--color-dark-purple);
+  flex-grow: 0;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid black;
+  background: hsl(var(--c), var(--sat), 20%);
+}
+
+header nav {
+  padding: 0.75em 0;
+  flex-wrap: wrap;
+}
+
+header a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+header li {
+  display: inline;
+  list-style: none;
+  margin-left: 1.5em;
+}
+
+header li a {
+  transition: transform 0.3s;
+}
+
+header li a:focus,
+header li a:hover,
+main a:focus,
+main a:hover {
+  transform: scale(1.25);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+#contact {
+  padding: 0.25em 1em;
+}
+
+#contact > li {
+  margin-bottom: 0.5em;
+}
+
+#contact li {
+  display: block;
+  padding: 0 0.5em;
+  border-radius: 1.5em;
+  background: hsl(calc(var(--c) - 20), var(--sat), 30%);
+  text-align: center;
+  box-shadow: var(--shadow-purple);
+}
+
+#contact a {
+  color: hsl(calc(var(--c) - 20), var(--sat), 90%);
+}
+
+main {
+  display: block;
+  padding: min(24vh, 12vw) clamp(0.5em, min(2vw, 4vh), 4em);
+  font-size: 1.5rem;
+}
+
+#mainContent {
+  padding: 1.5em;
+}
+
+#mainContent > * {
+  margin-bottom: 1em;
+}
+
+main ul {
+  padding: min(24vh, 12vw) clamp(0.5em, min(2vw, 4vh), 4em);
+}
+
+main li {
+  margin-bottom: 2em;
+  border-radius: 0.5em;
+  background: hsl(calc(var(--c) - 20), var(--sat), 30%);
+  overflow-wrap: break-word;
+  padding-left: 0.2em;
+  box-shadow: var(--shadow);
+}
+
+main a {
+  margin-left: 1%;
+  text-decoration: none;
+}
+
+#cv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+embed {
+  height: 100vh;
+}
+
+#projectsIndex a {
+  text-decoration: underline;
+  font-size: 1.4em;
+}
+
+#projectsIndex p {
+  padding-top: 1em;
+}
+
+@media only screen and (max-width: 937px) {
+  h1 {
+    text-align: center;
+  }
+
+  header {
+    display: block;
+  }
+
+  header nav {
+    text-align: center;
+  }
+
+  header > li * {
+    margin-left: 0;
+  }
+}

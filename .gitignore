@@ -1,0 +1,10 @@
+experiment/
+todo.txt
+**.exe
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+
+# Go workspace file
+go.work
