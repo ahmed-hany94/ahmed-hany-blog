@@ -1,4 +1,4 @@
-module github.com/bal7a/blog
+module github.com/bal7a/ahmed-hany-blog
 
 // +heroku goVersion go1.17
 go 1.17
