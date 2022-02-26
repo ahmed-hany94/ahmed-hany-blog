@@ -132,6 +132,11 @@ func viewProjectsHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "projects.html")
 }
 
+// this will show /robots.txt
+func viewRobotsHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "robots.txt")
+}
+
 // func doNothing(w http.ResponseWriter, r *http.Request) {}
 
 // ***************
@@ -143,6 +148,7 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/cv", viewCVHandler)
 	http.HandleFunc("/projects", viewProjectsHandler)
+	http.HandleFunc("/robots.txt", viewRobotsHandler)
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
