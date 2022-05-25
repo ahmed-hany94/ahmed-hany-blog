@@ -137,8 +137,6 @@ func viewRobotsHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "robots.txt")
 }
 
-// func doNothing(w http.ResponseWriter, r *http.Request) {}
-
 // ***************
 // Main Function *
 // ***************
@@ -152,7 +150,6 @@ func main() {
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	//http.HandleFunc("/favicon.ico", doNothing) // made it print twice because it made an extra request
 
 	port := os.Getenv("PORT")
 
