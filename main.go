@@ -8,7 +8,6 @@ import (
 	"os"
 	"regexp"
 	"strings"
-	"time"
 
 	"github.com/gomarkdown/markdown"
 )
@@ -106,7 +105,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	lines := strings.Split(string(md), "\n")
 
 	post_title := string(lines[0])
-	post_date := time.Now().Format("2006-January-02")
+	post_date := string(lines[1])
 	post_tags := string(lines[2])
 	body := strings.Join(lines[6:], "\n")
 	post_body := markdown.ToHTML([]byte(body), nil, nil)
@@ -137,6 +136,11 @@ func viewRobotsHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "robots.txt")
 }
 
+// this will show /feed.xml
+func viewFeedHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "feed.xml")
+}
+
 // ***************
 // Main Function *
 // ***************
@@ -146,6 +150,7 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/cv", viewCVHandler)
 	http.HandleFunc("/projects", viewProjectsHandler)
+	http.HandleFunc("/feed.xml", viewFeedHandler)
 	http.HandleFunc("/robots.txt", viewRobotsHandler)
 
 	fs := http.FileServer(http.Dir("./static"))
