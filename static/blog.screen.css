@@ -1,10 +1,10 @@
 body {
-  --c: 206;
-  --sat: 71%;
-  --lg: 9%;
+  --c: 207; /* 206; */
+  --sat: 45%; /* 71%; */
+  --lg: 19%; /* 9%; */
 
   --shadow: 0.1em 0.1em 0.4em hsl(186 10% 30%);
-  --shadow-purple: 0.1em 0.1em 0.5em hsl(270, 50%, 40%);
+  --shadow-purple: 0.1em 0.1em 0.5em #15142c;
 
   background: hsl(var(--c), var(--sat), var(--lg));
   color: hsl(var(--c), 15%, 90%);
@@ -12,7 +12,7 @@ body {
 
 a {
   border-radius: 2em;
-  color: hsl(var(--c), 55%, 70%);
+  color: hsl(46, 20%, 53%);
 }
 
 html,
@@ -72,9 +72,10 @@ body {
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 3em;
   line-height: 2;
   text-shadow: var(--shadow);
+  margin: auto;
 }
 
 h1 ~ * {
@@ -82,12 +83,23 @@ h1 ~ * {
   font-size: 1.3rem;
 }
 
+img {
+  margin: 2rem auto;
+  display: block;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #9e936f;
+}
+
 header {
   display: flex;
-  background: var(--color-dark-purple);
   flex-grow: 0;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #0a0a1f;
   background: hsl(var(--c), var(--sat), 20%);
 }
 
@@ -101,14 +113,19 @@ header a {
   text-decoration: none;
 }
 
+nav {
+  margin: auto;
+}
+
 nav li {
   display: inline;
   list-style: none;
-  margin-left: 1.5em;
+  margin: 0 2rem;
 }
 
 header li a {
   transition: transform 0.3s;
+  font-size: 1.6rem;
 }
 
 header li a:focus,
@@ -121,7 +138,7 @@ main a:hover {
 }
 
 #contact {
-  padding: 0.25em 1em;
+  margin: 1rem;
 }
 
 #contact > li {
@@ -154,6 +171,9 @@ main {
 #mainContent > h2 {
   font-size: 2em;
   margin-bottom: 1.5rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: #9e936f;
 }
 
 #mainContent > article {
@@ -167,6 +187,7 @@ main {
 
 #mainContent > article h3 {
   text-decoration: underline;
+  text-underline-offset: 0.2em;
   margin-bottom: 0.8em;
 }
 
@@ -227,6 +248,12 @@ embed {
   header > li * {
     margin-left: 0;
   }
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    height: auto !important;
+  }
 }
 
 @media only screen and (max-width: 406px) {
@@ -235,19 +262,16 @@ embed {
   }
 
   header > li * {
-    margin-left: 0;
+    margin: 0;
   }
 
-  header > nav > ul > li > a {
-    font-size: 0.8rem;
+  nav ul a,
+  #contact a {
+    font-size: 1rem;
   }
 
   #mainContent > h2 {
-    font-size: 1.4rem;
-  }
-
-  #mainContent > p {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
   }
 
   #mainContent > article p {
