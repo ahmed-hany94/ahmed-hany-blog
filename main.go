@@ -77,12 +77,7 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 		for i := len(postsDirectoryList) - 1; i >= 0; i-- {
 			p := postsDirectoryList[i]
 
-			var title string
-			if strings.Contains(p.Name(), ".rtl") {
-				title = strings.Replace(p.Name(), ".rtl.md", "", 1)
-			} else {
-				title = strings.Replace(p.Name(), ".md", "", 1)
-			}
+			title := strings.Replace(p.Name(), ".md", "", 1)
 
 			unslugify(&title)
 
@@ -97,24 +92,14 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 // this will show post at /view/<slug>
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	path := "./posts/" + title
+	fmt.Println(path)
 	md, err := os.ReadFile(path)
 	check(err)
 
-	// fmt.Println(path)
-
-	lines := strings.Split(string(md), "\n")
-
-	post_title := string(lines[0])
-	post_date := string(lines[1])
-	post_tags := string(lines[2])
-	body := strings.Join(lines[6:], "\n")
-	post_body := markdown.ToHTML([]byte(body), nil, nil)
+	post_body := markdown.ToHTML([]byte(md), nil, nil)
 	post_content := template.HTML(post_body)
 
 	post := Post{
-		Title:   post_title,
-		Date:    post_date,
-		Tags:    post_tags,
 		Content: post_content,
 	}
 
@@ -162,5 +147,6 @@ func main() {
 		port = "4444"
 	}
 
+	log.Println("listen on", ":"+port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

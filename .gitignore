@@ -1,6 +1,7 @@
 experiment/
 todo.txt
 **.exe
+bin/
 
 # Binaries for programs and plugins
 *.exe

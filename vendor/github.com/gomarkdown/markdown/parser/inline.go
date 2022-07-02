@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gomarkdown/markdown/ast"
+	"github.com/gomarkdown/markdown/internal/valid"
 )
 
 // Parsing of inline elements
@@ -131,7 +132,11 @@ func codeSpan(p *Parser, data []byte, offset int) (int, ast.Node) {
 
 	// find the next delimiter
 	i, end := 0, 0
+	hasLFBeforeDelimiter := false
 	for end = nb; end < len(data) && i < nb; end++ {
+		if data[end] == '\n' {
+			hasLFBeforeDelimiter = true
+		}
 		if data[end] == '`' {
 			i++
 		} else {
@@ -142,6 +147,18 @@ func codeSpan(p *Parser, data []byte, offset int) (int, ast.Node) {
 	// no matching delimiter?
 	if i < nb && end >= len(data) {
 		return 0, nil
+	}
+
+	// If there are non-space chars after the ending delimiter and before a '\n',
+	// flag that this is not a well formed fenced code block.
+	hasCharsAfterDelimiter := false
+	for j := end; j < len(data); j++ {
+		if data[j] == '\n' {
+			break
+		}
+		if !isSpace(data[j]) {
+			hasCharsAfterDelimiter = true
+		}
 	}
 
 	// trim outside whitespace
@@ -155,14 +172,31 @@ func codeSpan(p *Parser, data []byte, offset int) (int, ast.Node) {
 		fEnd--
 	}
 
-	// render the code span
-	if fBegin != fEnd {
-		code := &ast.Code{}
-		code.Literal = data[fBegin:fEnd]
-		return end, code
+	if fBegin == fEnd {
+		return end, nil
 	}
 
-	return end, nil
+	// if delimiter has 3 backticks
+	if nb == 3 {
+		i := fBegin
+		syntaxStart, syntaxLen := syntaxRange(data, &i)
+
+		// If we found a '\n' before the end marker and there are only spaces
+		// after the end marker, then this is a code block.
+		if hasLFBeforeDelimiter && !hasCharsAfterDelimiter {
+			codeblock := &ast.CodeBlock{
+				IsFenced: true,
+				Info:     data[syntaxStart : syntaxStart+syntaxLen],
+			}
+			codeblock.Literal = data[i:fEnd]
+			return end, codeblock
+		}
+	}
+
+	// render the code span
+	code := &ast.Code{}
+	code.Literal = data[fBegin:fEnd]
+	return end, code
 }
 
 // newline preceded by two spaces becomes <br>
@@ -781,7 +815,7 @@ func entity(p *Parser, data []byte, offset int) (int, ast.Node) {
 		codepoint, err = strconv.ParseUint(string(ent[2:len(ent)-1]), 10, 64)
 	}
 	if err == nil { // only if conversion was valid return here.
-		return end, newTextNode([]byte(string(codepoint)))
+		return end, newTextNode([]byte(string(rune(codepoint))))
 	}
 
 	return end, newTextNode(ent)
@@ -961,12 +995,9 @@ func isEndOfLink(char byte) bool {
 	return isSpace(char) || char == '<'
 }
 
-var validUris = [][]byte{[]byte("http://"), []byte("https://"), []byte("ftp://"), []byte("mailto://")}
-var validPaths = [][]byte{[]byte("/"), []byte("./"), []byte("../")}
-
 func isSafeLink(link []byte) bool {
 	nLink := len(link)
-	for _, path := range validPaths {
+	for _, path := range valid.Paths {
 		nPath := len(path)
 		linkPrefix := link[:nPath]
 		if nLink >= nPath && bytes.Equal(linkPrefix, path) {
@@ -978,7 +1009,7 @@ func isSafeLink(link []byte) bool {
 		}
 	}
 
-	for _, prefix := range validUris {
+	for _, prefix := range valid.URIs {
 		// TODO: handle unicode here
 		// case-insensitive prefix test
 		nPrefix := len(prefix)
@@ -1086,7 +1117,7 @@ func isMailtoAutoLink(data []byte) int {
 			nb++
 
 		case '-', '.', '_':
-			break
+			// no-op but not defult
 
 		case '>':
 			if nb == 1 {
