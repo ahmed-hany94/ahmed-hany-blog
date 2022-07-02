@@ -4,5 +4,8 @@ all:
 heroku-bash:
 	heroku run bash
 
+heroku-push:
+	git push heroku
+
 clean:
 	del .\*.exe
