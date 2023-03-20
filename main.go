@@ -35,8 +35,6 @@ var templates = template.Must(
 	template.ParseFiles(
 		"public/index.html",
 		"public/post.html",
-		"public/cv.html",
-		"public/projects.html",
 	),
 )
 var validPath = regexp.MustCompile("^/(view)/([a-zA-Z0-9-.\u0621-\u064A]+)$")
@@ -80,7 +78,7 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 		for i := len(postsDirectoryList) - 1; i >= 0; i-- {
 			p := postsDirectoryList[i]
 
-			title := strings.Replace(p.Name(), ".md", "", 1)
+			title := strings.Replace(p.Name(), ".html", "", 1)
 
 			unslugify(&title)
 
@@ -109,22 +107,22 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 // this will show /cv
 func viewCVHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "cv.html")
+	http.ServeFile(w, r, "./public/cv.html")
 }
 
 // this will show /projects
 func viewProjectsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "projects.html")
+	http.ServeFile(w, r, "./public/projects.html")
 }
 
 // this will show /robots.txt
 func viewRobotsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "robots.txt")
+	http.ServeFile(w, r, "./public/robots.txt")
 }
 
 // this will show /feed.xml
 func viewFeedHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "feed.xml")
+	http.ServeFile(w, r, "./public/feed.xml")
 }
 
 // ***************
@@ -139,8 +137,8 @@ func main() {
 	http.HandleFunc("/feed.xml", viewFeedHandler)
 	http.HandleFunc("/robots.txt", viewRobotsHandler)
 
-	fs := http.FileServer(http.Dir("./public"))
-	http.Handle("/public/", http.StripPrefix("/public/", fs))
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	port := os.Getenv("PORT")
 

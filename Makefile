@@ -1,4 +1,5 @@
 all:
+	del .\*.exe
 	go build -o ./main.exe ./main.go
 
 push-amend:
