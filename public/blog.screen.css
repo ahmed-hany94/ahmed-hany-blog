@@ -12,7 +12,7 @@ body {
 
 a {
   border-radius: 2em;
-  color: hsl(46, 20%, 53%);
+  color: hsl(46, 20%, 53%); /* more contrast hsl(46, 30%, 80%) */
 }
 
 html,

@@ -1,15 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
-
-	"github.com/gomarkdown/markdown"
 )
 
 // *****************
@@ -34,7 +31,14 @@ type Posts struct {
 
 var PostsToList Posts
 
-var templates = template.Must(template.ParseFiles("index.html", "post.html", "cv.html", "projects.html"))
+var templates = template.Must(
+	template.ParseFiles(
+		"public/index.html",
+		"public/post.html",
+		"public/cv.html",
+		"public/projects.html",
+	),
+)
 var validPath = regexp.MustCompile("^/(view)/([a-zA-Z0-9-.\u0621-\u064A]+)$")
 
 // ****************
@@ -50,7 +54,6 @@ func check(e error) {
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		m := validPath.FindStringSubmatch(r.URL.Path)
-		fmt.Println(m)
 		if m == nil {
 			http.NotFound(w, r)
 			return
@@ -92,11 +95,9 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 // this will show post at /view/<slug>
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	path := "./posts/" + title
-	fmt.Println(path)
-	md, err := os.ReadFile(path)
+	post_body, err := os.ReadFile(path)
 	check(err)
 
-	post_body := markdown.ToHTML([]byte(md), nil, nil)
 	post_content := template.HTML(post_body)
 
 	post := Post{
@@ -138,8 +139,8 @@ func main() {
 	http.HandleFunc("/feed.xml", viewFeedHandler)
 	http.HandleFunc("/robots.txt", viewRobotsHandler)
 
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("./public"))
+	http.Handle("/public/", http.StripPrefix("/public/", fs))
 
 	port := os.Getenv("PORT")
 

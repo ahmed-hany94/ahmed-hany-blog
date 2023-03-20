@@ -24,14 +24,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
       media="screen,print"
     />
-    <link
-      rel="alternate"
-      type="application/atom+xml"
-      title="Ahmed Hany's Blog"
-      href="/feed.xml"
-    />
-    <link rel="shortcut icon" href="static/favicon_io/favicon.ico" />
-    <link rel="stylesheet" href="/static/blog.screen.css" media="screen" />
+    <link rel="stylesheet" href="/public/blog.screen.css" media="screen" />
     <title>Ahmed Hany - Blog</title>
   </head>
   <body>
@@ -45,21 +38,17 @@
         </ul>
       </nav>
       <ul id="contact">
-        <li><a href="https://github.com/bal7a">GITHUB</a></li>
+        <li><a href="https://github.com/ahmed-hany94">GITHUB</a></li>
         <li><a href="mailto:ahmed.hany.ebrahem@gmail.com">EMAIL</a></li>
       </ul>
     </header>
 
     <main>
-      <section id="postsIndex">
-        <ul>
-          <!-- prettier-ignore  -->
-          {{range .PostsList}}
-          <li>
-            <a href="/view/{{.Slug}}">{{.Title}}</a>
-          </li>
-          {{ end }}
-        </ul>
+      <section id="mainContent">
+        <!-- <h2>{{.Title}}</h2> -->
+        <!-- <p>{{.Date}}</p>
+        <p>{{.Tags}}</p> -->
+        <article>{{.Content}}</article>
       </section>
     </main>
   </body>
