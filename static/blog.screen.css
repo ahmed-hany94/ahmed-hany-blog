@@ -3,15 +3,15 @@ body {
   --sat: 43%;
   --lg: 15%;
 
-  --shadow: 0.1em 0.1em 0.4em hsl(186 10% 30%);
-  --shadow-purple: 0.1em 0.1em 0.5em hsl(243, 38%, 13%);
+  --shadow: 0.1rem 0.1rem 0.4rem hsl(186 10% 30%);
+  --shadow-purple: 0.1rem 0.1rem 0.5rem hsl(243, 38%, 13%);
 
   background: hsl(var(--c), var(--sat), var(--lg));
   color: hsl(var(--c), 15%, 90%);
 }
 
 a {
-  border-radius: 2em;
+  border-radius: 2rem;
   color: hsl(46, 20%, 53%); /* more contrast hsl(46, 30%, 80%) */
 }
 
@@ -63,7 +63,7 @@ input,
 table,
 textarea,
 select {
-  font: normal 1em/1.5 "poppins", arial, helvetica, sans-serif;
+  font: normal 1rem/1.5 "poppins", arial, helvetica, sans-serif;
 }
 
 html,
@@ -72,7 +72,7 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 3rem;
   line-height: 2;
   text-shadow: var(--shadow);
   margin: auto;
@@ -84,8 +84,11 @@ h1 ~ * {
 }
 
 img {
-  margin: 2rem auto;
   display: block;
+  max-width: 100%;
+  width: 100%;
+  height: auto !important;
+  padding: 1rem 4rem;
 }
 
 figcaption {
@@ -104,7 +107,7 @@ header {
 }
 
 header nav {
-  padding: 0.75em 0;
+  padding: 0.75rem 0;
   flex-wrap: wrap;
 }
 
@@ -117,10 +120,26 @@ nav {
   margin: auto;
 }
 
-nav li {
+#nav-links li {
   display: inline;
   list-style: none;
   margin: 0 2rem;
+}
+
+#tags-list li {
+  display: inline-block;
+  list-style: none;
+  margin: 0.2rem 0.2rem;
+  font-size: 1rem;
+}
+
+.list {
+  padding-left: 2rem;
+}
+
+.list li {
+  padding-bottom: 1rem;
+  font-size: 1rem;
 }
 
 header li a {
@@ -134,7 +153,7 @@ main a:focus,
 main a:hover {
   transform: scale(1.25);
   text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.2rem;
 }
 
 #contact {
@@ -142,13 +161,13 @@ main a:hover {
 }
 
 #contact > li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 #contact li {
   display: block;
-  padding: 0 0.5em;
-  border-radius: 1.5em;
+  padding: 0 0.5rem;
+  border-radius: 1.5rem;
   background: hsl(calc(var(--c) - 20), var(--sat), 30%);
   text-align: center;
   box-shadow: var(--shadow-purple);
@@ -160,39 +179,42 @@ main a:hover {
 
 main {
   display: block;
-  padding: min(8vh, 4vw) clamp(0.5em, min(2vw, 4vh), 4em);
+  padding: min(8vh, 4vw) clamp(1rem, min(2vw, 4vh), 4rem);
   font-size: 1.5rem;
 }
 
-#mainContent {
-  padding: 1.5em;
-}
-
 #mainContent > h2 {
-  font-size: 2em;
+  font-size: 2rem;
   margin-bottom: 1.5rem;
   text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.2rem;
   color: #9e936f;
 }
 
 #mainContent > article {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
-#mainContent > article ol li {
+#tags {
+  padding-bottom: 1rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 0.2rem solid hsl(46, 20%, 53%);
+}
+
+#tags li {
   list-style: none;
+  display: inline;
 }
 
 #mainContent > article p {
-  margin-bottom: 0.8em;
+  margin-bottom: 0.8rem;
   line-height: 2;
 }
 
 #mainContent > article h3 {
   text-decoration: underline;
-  text-underline-offset: 0.2em;
-  margin-bottom: 0.8em;
+  text-underline-offset: 0.2rem;
+  margin-bottom: 0.8rem;
 }
 
 #mainContent > article table {
@@ -200,16 +222,84 @@ main {
   text-align: center;
 }
 
+#snippet {
+  background-color: #2b2b2b;
+  border-radius: 0.2rem;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.prompt {
+  color: #ffd700;
+}
+
+pre {
+  padding: 0.5rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
+code {
+  font: normal 1rem/1.5 "poppins", arial, helvetica, sans-serif;
+}
+
+.highlight {
+  background-color: rgb(58, 62, 65);
+  border-radius: 0.2rem;
+  padding: 0.1rem 0.2rem;
+  margin: 0.2rem;
+}
+
+.tags {
+  background-color: rgb(179, 16, 65);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.2rem;
+  margin-right: 0.15rem;
+  margin-bottom: 0.2rem;
+}
+
+.red-sc {
+  color: #ff7369;
+}
+
+.orange-sc {
+  color: #fca67b;
+}
+
+.purple-sc {
+  color: #c58fff;
+}
+
+.blue-sc {
+  color: #94ccf7;
+}
+
+.comment-sc {
+  color: #8b949e;
+}
+
 #postsIndex ul {
-  padding: min(8vh, 12vw) clamp(0.5em, min(2vw, 4vh), 4em);
+  padding: min(8vh, 12vw) clamp(0.5rem, min(2vw, 4vh), 4rem);
+}
+
+.two-images-side-by-side {
+  display: flex;
+  flex-grow: 0;
+}
+
+.two-images-side-by-side img {
+  width: 45%;
+  padding: 0 0.2rem;
+  margin-bottom: 2rem;
 }
 
 #postsIndex li {
-  margin-bottom: 2em;
-  border-radius: 0.5em;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
   background: hsl(calc(var(--c) - 20), var(--sat), 30%);
   overflow-wrap: break-word;
-  padding-left: 0.2em;
+  padding-left: 0.2rem;
   box-shadow: var(--shadow);
 }
 
@@ -229,20 +319,21 @@ embed {
 }
 
 #projectsIndex a {
-  font-size: 1.4em;
+  font-size: 1.4rem;
 }
 
 #projectsIndex p {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
-@media only screen and (max-width: 937px) {
+@media only screen and (max-width: 1024px) {
   h1 {
     text-align: center;
   }
 
   header {
     display: block;
+    width: 100%;
   }
 
   header nav {
@@ -252,21 +343,24 @@ embed {
   header > li * {
     margin-left: 0;
   }
-
-  img {
-    max-width: 100%;
-    width: 100%;
-    height: auto !important;
-  }
 }
 
-@media only screen and (max-width: 406px) {
+@media only screen and (max-width: 500px) {
   h1 {
     font-size: 1.6rem;
   }
 
+  h2 {
+    font-size: 1.4rem;
+  }
+
   header > li * {
     margin: 0;
+  }
+
+  pre {
+    font-size: 0.65rem;
+    overflow-x: scroll;
   }
 
   nav ul a,
@@ -276,6 +370,10 @@ embed {
 
   #mainContent > h2 {
     font-size: 1.2rem;
+  }
+
+  #tags {
+    font-size: 0.65rem;
   }
 
   #mainContent > article p {
@@ -293,11 +391,11 @@ embed {
 
   #projectsIndex a {
     text-decoration: underline;
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 
   #projectsIndex p {
-    padding-top: 1em;
+    padding-top: 1rem;
     font-size: 1rem;
   }
 }

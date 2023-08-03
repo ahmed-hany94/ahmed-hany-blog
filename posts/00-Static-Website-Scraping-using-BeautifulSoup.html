@@ -1,0 +1,220 @@
+<h2>Static website Scraping using BeautifulSoup.</h2>
+
+<p><time datetime="2023-August-2">2023-August-2</time></p>
+
+<ol id="tags-list">
+  <li><span class="tags">#programming</span></li>
+  <li><span class="tags">#web-scraping</span></li>
+</ol>
+
+<hr />
+
+<p>
+  Web scraping is automated browsing to scrape (get) data or perform actions. It
+  can be used for nefarious reasons, can be misused, can be a tech-savvy way to
+  automate boring repetitive tasks. <br />
+  <strong>The onus is on you</strong>.
+</p>
+
+<h3><a href="#how">How?!</a></h3>
+<p>
+  Scrapping a static website is rather simple. We'll need python and three
+  additional libraries: <span class="highlight">requests</span>;
+  <span class="highlight">BeautifulSoup</span>;
+  <span class="highlight">lxml</span>.
+</p>
+<div id="snippet">
+  <pre>
+  <code>
+<span class="prompt">$></span>  pip install requests
+<span class="prompt">$></span>  pip install beautifulsoup4
+<span class="prompt">$></span>  pip install lxml
+  </code>
+</pre>
+</div>
+<p>Great! <br />The Skeleton for this script is the following.</p>
+<div id="snippet">
+  <pre>
+  <code>
+<span class="comment-sc"># External Libraries</span>
+<span class="red-sc">import</span> requests
+<span class="red-sc">from</span> bs4 <span class="red-sc">import</span> <span class="orange-sc">BeautifulSoup</span> <span class="red-sc">as</span> bs4
+  </code>
+</pre>
+</div>
+<p>
+  To scrape a static site, you need to connect to it, we use the
+  <span class="highlight">requests</span> library for that, and an html parser
+  library, we use <span class="highlight">BeautifulSoup</span>,
+  <span class="highlight">lxml</span> libraries for that.
+</p>
+<div id="snippet">
+  <pre>
+  <code>
+<span class="comment-sc"># External Libraries</span>
+<span class="red-sc">import</span> requests
+<span class="red-sc">from</span> bs4 <span class="red-sc">import</span> <span class="orange-sc">BeautifulSoup</span> <span class="red-sc">as</span> bs4
+
+u = <span class="blue-sc">"https://example.com"</span>
+r = requests.<span class="purple-sc">get</span>(u)
+<span class="red-sc">if</span> r.ok:
+    soup = <span class="purple-sc">bs4</span>(r.text, <span class="blue-sc">'lxml'</span>)
+  </code>
+</pre>
+</div>
+<p>
+  We have know successfully sent a request to the server, received a response,
+  parsed the html, and got back an object
+  <span class="highlight">soup</span> with website DOM tree model.
+  <br />
+  We have assumed that everything went well here. We assumed that the request
+  returned
+  <span class="highlight">200</span> status code, it could have returned
+  <span class="highlight">302</span>, <span class="highlight">4xx</span>,
+  <span class="highlight">5xx</span>, status codes. We did no error handling and
+  no logging if something happened.
+</p>
+<div id="snippet">
+  <pre>
+  <code>
+<span class="comment-sc"># External Libraries</span>
+<span class="red-sc">import</span> requests
+<span class="red-sc">from</span> bs4 <span class="red-sc">import</span> <span class="orange-sc">BeautifulSoup</span> <span class="red-sc">as</span> bs4
+
+<span class="red-sc">try</span>:
+    u = <span class="blue-sc">"https://example.com"</span>
+    r = requests.<span class="purple-sc">get</span>(u)
+
+    <span class="comment-sc"># If Redirection?</span>
+    <span class="red-sc">if</span> r.history:
+        <span class="comment-sc"># Save it</span>
+        new_url = r.url
+
+    <span class="red-sc">if</span> r.ok:
+        soup = <span class="purple-sc">bs4</span>(r.text, <span class="blue-sc">'lxml'</span>)      
+<span class="red-sc">except</span> requests.exceptions.RequestException <span class="red-sc">as</span> e:
+    <span class="comment-sc"># Something went wrong?</span>
+    <span class="purple-sc">print</span>(e)
+<span class="red-sc">except</span> KeyboardInterrupt: 
+    <span class="comment-sc"># Ctrl + C?</span>
+    <span class="purple-sc">exit</span>(0)
+  </code>
+</pre>
+</div>
+<p>
+  Better, could be improved but now if something goes wrong, you handle it.
+  <br />
+  So we have the <span class="highlight">soup</span> object, what can I do with
+  it?
+</p>
+<ul class="list">
+  <li>
+    You can search and filter the html of the website any way you want. If you
+    were to press <span class="highlight">Ctrl + Shift + C</span>, you can
+    highlight whatever element you want in the devtool panel, right-click on the
+    element and copy their css selector.
+    <br />
+    <span class="highlight">
+      <code>soup.<span class="purple-sc">select</span>(css_selector)</code>
+    </span>
+    <br />
+    Very useful if I want a specific element.
+  </li>
+  <li>
+    What if I find a lot of elements by a certain attribute.
+    <br />
+    <span class="highlight">
+      <code>soup.<span class="purple-sc">find_all</span>("a")</code>
+    </span>
+    gets all a links <br /><br />
+    <span class="highlight">
+      <code
+        >soup.<span class="purple-sc">find_all</span>(<span class="blue-sc"
+          >"div"</span
+        >, class_=className)</code
+      >
+    </span>
+    gets all divs that have a class with the actual className of the elements.
+    <br />
+    Same goes for <span class="highlight">id</span> attribute,
+    <span class="highlight">css</span> attribute,
+    <span class="highlight">data-*</span> attribute, ...etc
+    <br />
+    Pretty fun stuff.
+  </li>
+</ul>
+<h3><a href="#threading">Let's make this a threaded function!</a></h3>
+<p>
+  This sounds awesome if you want to scrape a couple of pages, but what if we
+  want to scrape multiple pages and for each page maybe get some sub pages.
+  Threading helps with that. Let's put our logic so far in a function as this is
+  what gets repeated and therefore can be parallelized.
+</p>
+<div id="snippet">
+  <pre>
+  <code>
+<span class="comment-sc"># External Libraries</span>
+<span class="red-sc">import</span> requests
+<span class="red-sc">from</span> bs4 <span class="red-sc">import</span> <span class="orange-sc">BeautifulSoup</span> <span class="red-sc">as</span> bs4
+
+<span class="comment-sc"># Standard Libraries</span>
+<span class="red-sc">import</span> time
+<span class="red-sc">import</span> threading
+
+LOCK = threading.<span class="purple-sc">Lock</span>()
+LIST = []
+u = <span class="blue-sc">"https://example.com"</span>
+
+<span class="read-sc">def</span> <span class="purple-sc">scrape</span>(u, id):
+    <span class="red-sc">try</span>:
+        <span class="red-sc">global</span> LOCK
+        <span class="red-sc">global</span> LIST
+
+        r = requests.<span class="purple-sc">get</span>(<span class="blue-sc">f"</span>{u}<span class="blue-sc">?id=</span>{id}<span class="blue-sc">"</span>)
+
+        <span class="red-sc">if</span> r.history:
+            new_url = r.url
+
+        <span class="red-sc">if</span> r.ok:
+            soup = <span class="purple-sc">bs4</span>(r.text, <span class="blue-sc">'lxml'</span>)      
+            a = soup.<span class="purple-sc">select</span>(<span class="blue-sc">"a"</span>, _class=<span class="blue-sc">"link"</span>)
+            <span class="red-sc">with</span> LOCK:
+                LIST.<span class="purple sc">append</span>(a)
+            
+            <span class="comment-sc"># Avoid DOS Attack!😊</span>
+            time.<span class="purple-sc">sleep</span>(30)
+    <span class="red-sc">except</span> requests.exceptions.RequestException <span class="red-sc">as</span> e:
+        <span class="purple-sc">print</span>(e)
+    <span class="red-sc">except</span> KeyboardInterrupt: 
+        <span class="purple-sc">exit</span>(0)
+
+
+<span class="comment-sc"># Main Entry Point</span>
+<span class="red-sc">if</span> __name__ == <span class="blue-sc">"__main__"</span>:
+    <span class="red-sc">for</span> i <span class="red-sc">in</span> <span class="purple-sc">range</span>(10):
+            <span class="comment-sc"># 10 threads running scrape function at the same time</span>
+            t = threading.<span class="blue-sc">Thread</span>(scrape, args=(u, id))
+            t.<span class="blue-sc">start</span>()
+            t.<span class="blue-sc">join</span>()
+  </code>
+</pre>
+</div>
+<p>There are other ways to parallelize them, but this will suffice.</p>
+<h3><a href="#legality">Legality and Etiquette.</a></h3>
+<p>
+  The legality and etiquette of scraping can be a contentious issue, as it
+  involves navigating a delicate balance between extracting useful information
+  and respecting the rights of website owners. <br /><br />
+  From a <strong>legal perspective</strong>, the acceptability of web scraping
+  varies by jurisdiction and depends on factors such as the terms of service of
+  the website being scraped, the type of data being extracted, and the intended
+  use of the data. In some cases, scraping can be considered a violation of
+  copyright, trademark, or data protection laws. To ensure legality, scrapers
+  should seek permission from website owners, comply with robots.txt files, and
+  avoid excessive and disruptive scraping. <br />
+  <br />
+  In terms of <strong>etiquette</strong>, scrapers should follow best practices
+  such as setting reasonable request rates, identifying themselves with a valid
+  User-Agent header, and refraining from scraping sensitive or personal data.
+</p>
+<p>In short, check you country's laws and don't be a dick to servers.</p>
