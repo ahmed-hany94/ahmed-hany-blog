@@ -183,12 +183,19 @@ main {
   font-size: 1.5rem;
 }
 
-#mainContent > h2 {
+h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   text-decoration: underline;
-  text-underline-offset: 0.2rem;
-  color: #9e936f;
+  text-underline-offset: 0.8rem;
+}
+
+#date-published {
+  font-size: 1rem;
+}
+
+#date-published time {
+  color: #d3ccb5;
 }
 
 #mainContent > article {
@@ -225,6 +232,7 @@ main {
 #snippet {
   background-color: #2b2b2b;
   border-radius: 0.2rem;
+  border: 1px solid #ffd700;
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 2rem;
@@ -318,6 +326,10 @@ embed {
   height: 100vh;
 }
 
+#projectsIndex {
+  margin-left: 4rem;
+}
+
 #projectsIndex a {
   font-size: 1.4rem;
 }
@@ -350,10 +362,6 @@ embed {
     font-size: 1.6rem;
   }
 
-  h2 {
-    font-size: 1.4rem;
-  }
-
   header > li * {
     margin: 0;
   }
@@ -366,10 +374,6 @@ embed {
   nav ul a,
   #contact a {
     font-size: 1rem;
-  }
-
-  #mainContent > h2 {
-    font-size: 1.2rem;
   }
 
   #tags {
