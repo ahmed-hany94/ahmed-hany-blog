@@ -99,6 +99,11 @@ nav {
   text-shadow: 0.1rem 0.1rem 0.8rem var(--textcolor);
 }
 
+#nav-links a {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
 #tags-list li {
   display: inline-block;
   list-style: none;
@@ -317,6 +322,38 @@ embed {
   }
 
   #nav-links li{
+    margin-left: 0.2rem;
+    margin-right: 0;
+  }
+
+  #contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #contact *{
+    flex-grow: 0;
+  }
+
+  #contact > li{
+    margin-right: 0.5rem;
+  }
+
+  #contact li:nth-child(2) a{
+    padding-left: 1.3rem;
+  }
+
+  #contact li:nth-child(2) a::before{
+    left: -0.3rem;
+    top: 10%;
+  }
+
+  #nav-links{
+    flex-grow: 0;
+  }
+
+  #nav-links li{
     margin-left: 0.8rem;
     margin-right: 0;
   }
@@ -343,11 +380,6 @@ embed {
   #contact li:nth-child(2) a::before{
     left: -0.3rem;
     top: 10%;
-  }
-
-  pre {
-    font-size: 0.8rem;
-    overflow-x: scroll;
   }
 }
 
