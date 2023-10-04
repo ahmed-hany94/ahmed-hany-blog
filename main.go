@@ -34,7 +34,7 @@ var PostsToList Posts
 var templates = template.Must(
 	template.ParseFiles(
 		"public/index.html",
-		"public/post.html",
+		"public/template.html",
 	),
 )
 var validPath = regexp.MustCompile("^/(view)/([a-zA-Z0-9-.\u0621-\u064A]+)$")
@@ -102,17 +102,37 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 		Content: post_content,
 	}
 
-	templates.ExecuteTemplate(w, "post.html", post)
+	templates.ExecuteTemplate(w, "template.html", post)
 }
 
 // this will show /cv
 func viewCVHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./public/cv.html")
+	path := "./public/cv.html"
+	cv_body, err := os.ReadFile(path)
+	check(err)
+
+	cv_content := template.HTML(cv_body)
+
+	cv := Post{
+		Content: cv_content,
+	}
+
+	templates.ExecuteTemplate(w, "template.html", cv)
 }
 
 // this will show /projects
 func viewProjectsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./public/projects.html")
+	path := "./public/projects.html"
+	cv_body, err := os.ReadFile(path)
+	check(err)
+
+	cv_content := template.HTML(cv_body)
+
+	cv := Post{
+		Content: cv_content,
+	}
+
+	templates.ExecuteTemplate(w, "template.html", cv)
 }
 
 // this will show /robots.txt
@@ -131,6 +151,7 @@ func viewFeedHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", listHandler)
+	http.HandleFunc("/posts", listHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/cv", viewCVHandler)
 	http.HandleFunc("/projects", viewProjectsHandler)

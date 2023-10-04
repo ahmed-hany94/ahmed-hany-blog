@@ -70,7 +70,7 @@ header {
   flex-grow: 0;
   border-bottom: 1px solid hsl(240, 51%, 8%);
   background: hsl(208, 22%, 29%);
-  font-size: clamp(1.2rem, 1.25vw, 10rem);
+  font-size: clamp(1.1rem, 1.25vw, 10rem);
 }
 
 header nav {
@@ -90,7 +90,13 @@ nav {
 #nav-links li {
   display: inline;
   list-style: none;
-  margin: 0 2rem;
+  margin: 0 1.2rem;
+}
+
+#nav-links a {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+  text-shadow: 0.1rem 0.1rem 0.8rem var(--textcolor);
 }
 
 #tags-list li {
@@ -137,15 +143,38 @@ main a:hover {
   box-shadow: var(--shadow-purple);
 }
 
-#contact a {
+#contact li a {
   color: hsl(calc(var(--c) - 20), var(--sat), 90%);
+}
+
+#contact li:nth-child(1) a{
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+#contact li:nth-child(1) a::before{
+  content: url(../static/icons/icons8-github.svg);
+  position: absolute;
+  left: -0.2rem;
+  top: 10%;  
+}
+
+#contact li:nth-child(2) a{
+  padding-left: 1rem;
+  position: relative;
+}
+
+#contact li:nth-child(2) a::before{
+  content: url(../static/icons/icons8-gmail.svg);
+  position: absolute;
+  left: -0.6rem;
+  top: 10%;
 }
 
 main {
   display: block;
   padding: min(8vh, 4vw) clamp(2rem, min(15vw, 17vh), 16rem);
   font-size: clamp(0.9rem, 1.25vw, 10rem);
-  /* line-height: 1.8; */
   margin: 0 auto;
   max-width: 64rem;
 }
@@ -156,10 +185,6 @@ h2 {
 
 #date-published time {
   color: #d3ccb5;
-}
-
-#mainContent > article {
-  margin-top: 1rem;
 }
 
 #tags {
@@ -196,7 +221,8 @@ h2 {
   color: #ffd700;
 }
 
-pre {  
+pre {
+  font-size: 1rem; 
   padding: 0 1rem;
   margin: 0;
 }
@@ -275,40 +301,53 @@ embed {
   height: 100vh;
 }
 
-#projectsIndex {
-  margin-left: 4rem;
-}
-
-#projectsIndex p {
-  margin-top: 1rem;
-}
-
 @media only screen and (max-width: 500px) {
   h1 {
     margin: 0;
   }
 
-  header > li * {
-    margin: 0;
+  nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #nav-links{
+    flex-grow: 0;
+  }
+
+  #nav-links li{
+    margin-left: 0.8rem;
+    margin-right: 0;
+  }
+
+  #contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.1rem;
+  }
+
+  #contact *{
+    flex-grow: 0;
+  }
+
+  #contact > li{
+    margin-right: 0.5rem;
+  }
+
+  #contact li:nth-child(2) a{
+    padding-left: 1.3rem;
+  }
+
+  #contact li:nth-child(2) a::before{
+    left: -0.3rem;
+    top: 10%;
   }
 
   pre {
     font-size: 0.8rem;
     overflow-x: scroll;
-  }
-
-  #projectsIndex a {
-    text-decoration: underline;
-  }
-
-  #projectsIndex p {
-    padding-top: 1rem;
-  }
-}
-
-@media only screen and (max-width: 412px) {
-  h2{
-    text-underline-offset: 0.4rem;
   }
 }
 
@@ -330,4 +369,4 @@ embed {
     header > li * {
       margin-left: 0;
     }
-  }
+}
