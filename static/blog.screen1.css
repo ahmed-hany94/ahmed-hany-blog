@@ -6,13 +6,14 @@ body {
   --shadow: 0.1rem 0.1rem 0.4rem hsl(186 10% 30%);
   --shadow-purple: 0.1rem 0.1rem 0.5rem hsl(243, 38%, 13%);
 
-  background: hsl(var(--c), var(--sat), var(--lg));
-  color: hsl(var(--c), 15%, 90%);
+  background: hsl(206, 43%, 15%);
+  color: hsl(206, 15%, 90%);
+  --textcolor: hsl(46, 20%, 53%);
 }
 
 a {
   border-radius: 2rem;
-  color: hsl(46, 20%, 53%); /* more contrast hsl(46, 30%, 80%) */
+  color: var(--textcolor);
 }
 
 html,body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,
@@ -33,7 +34,7 @@ button,label {
 }
 
 body,button,input,table,textarea,select {
-  font: normal 1rem/1.5 "poppins", arial, helvetica, sans-serif;
+  font: normal 1rem/1.7 "CaskaydiaCoveNerdFont-Regular";
 }
 
 html,body {
@@ -41,15 +42,13 @@ html,body {
 }
 
 h1 {
-  font-size: 3rem;
-  line-height: 2;
   text-shadow: var(--shadow);
   margin: auto;
+  margin-left: 1rem;
 }
 
 h1 ~ * {
   flex-grow: 0;
-  font-size: 1.3rem;
 }
 
 img {
@@ -62,7 +61,6 @@ img {
 
 figcaption {
   text-align: center;
-  font-size: 1.2rem;
   margin-bottom: 2rem;
   color: #9e936f;
 }
@@ -70,9 +68,9 @@ figcaption {
 header {
   display: flex;
   flex-grow: 0;
-  padding: 0.5rem 1rem;
   border-bottom: 1px solid hsl(240, 51%, 8%);
-  background: #394a59;
+  background: hsl(208, 22%, 29%);
+  font-size: clamp(1.2rem, 1.25vw, 10rem);
 }
 
 header nav {
@@ -99,7 +97,6 @@ nav {
   display: inline-block;
   list-style: none;
   margin: 0.2rem 0.2rem;
-  font-size: 1rem;
 }
 
 .list {
@@ -108,12 +105,10 @@ nav {
 
 .list li {
   padding-bottom: 1rem;
-  font-size: 1rem;
 }
 
 header li a {
   transition: transform 0.3s;
-  font-size: 1.6rem;
 }
 
 header li a:focus,
@@ -148,19 +143,15 @@ main a:hover {
 
 main {
   display: block;
-  padding: min(8vh, 4vw) clamp(1rem, min(2vw, 4vh), 4rem);
-  font-size: 1.5rem;
+  padding: min(8vh, 4vw) clamp(2rem, min(15vw, 17vh), 16rem);
+  font-size: clamp(0.9rem, 1.25vw, 10rem);
+  /* line-height: 1.8; */
+  margin: 0 auto;
+  max-width: 64rem;
 }
 
 h2 {
-  font-size: 2rem;
   margin-bottom: 1.5rem;
-  text-decoration: underline;
-  text-underline-offset: 0.8rem;
-}
-
-#date-published {
-  font-size: 1rem;
 }
 
 #date-published time {
@@ -174,7 +165,7 @@ h2 {
 #tags {
   padding-bottom: 1rem;
   margin-bottom: 2.5rem;
-  border-bottom: 0.2rem solid hsl(46, 20%, 53%);
+  border-bottom: 0.2rem solid var(--textcolor);
 }
 
 #tags li {
@@ -184,18 +175,12 @@ h2 {
 
 #mainContent > article p {
   margin-bottom: 0.8rem;
-  line-height: 2;
 }
 
 #mainContent > article h3 {
   text-decoration: underline;
   text-underline-offset: 0.2rem;
   margin-bottom: 0.8rem;
-}
-
-#mainContent > article table {
-  width: 100%;
-  text-align: center;
 }
 
 #snippet {
@@ -211,14 +196,9 @@ h2 {
   color: #ffd700;
 }
 
-pre {
-  padding: 0.5rem;
+pre {  
+  padding: 0 1rem;
   margin: 0;
-  font-size: 1rem;
-}
-
-code {
-  font: normal 1rem/1.5 "poppins", arial, helvetica, sans-serif;
 }
 
 .highlight {
@@ -299,36 +279,13 @@ embed {
   margin-left: 4rem;
 }
 
-#projectsIndex a {
-  font-size: 1.4rem;
-}
-
 #projectsIndex p {
   margin-top: 1rem;
 }
 
-@media only screen and (max-width: 1024px) {
-  h1 {
-    text-align: center;
-  }
-
-  header {
-    display: block;
-    width: 100%;
-  }
-
-  header nav {
-    text-align: center;
-  }
-
-  header > li * {
-    margin-left: 0;
-  }
-}
-
 @media only screen and (max-width: 500px) {
   h1 {
-    font-size: 1.6rem;
+    margin: 0;
   }
 
   header > li * {
@@ -336,39 +293,41 @@ embed {
   }
 
   pre {
-    font-size: 0.65rem;
-    overflow-x: scroll;
-  }
-
-  nav ul a,
-  #contact a {
-    font-size: 1rem;
-  }
-
-  #tags {
-    font-size: 0.65rem;
-  }
-
-  #mainContent > article p {
-    font-size: 1rem;
-  }
-
-  #mainContent > article table {
-    text-align: center;
-  }
-
-  #mainContent > article table > tbody > tr > th,
-  #mainContent > article table > tbody > tr > td {
     font-size: 0.8rem;
+    overflow-x: scroll;
   }
 
   #projectsIndex a {
     text-decoration: underline;
-    font-size: 1.2rem;
   }
 
   #projectsIndex p {
     padding-top: 1rem;
-    font-size: 1rem;
   }
 }
+
+@media only screen and (max-width: 412px) {
+  h2{
+    text-underline-offset: 0.4rem;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+    h1 {
+      margin: 0;
+      text-align: center;
+    }
+  
+    header {
+      display: block;
+      width: 100%;
+    }
+  
+    header nav {
+      text-align: center;
+    }
+  
+    header > li * {
+      margin-left: 0;
+    }
+  }
