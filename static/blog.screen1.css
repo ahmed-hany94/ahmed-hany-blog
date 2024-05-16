@@ -11,9 +11,29 @@ body {
   --textcolor: hsl(46, 20%, 53%);
 }
 
+@font-face {
+	font-display:swap;
+	font-family:"Hack-Regular";
+	font-style:normal;
+	font-weight:normal;
+	src:
+		url("/static/fonts/Hack-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-display:swap;
+	font-family:"aAbsoluteEmpire";
+	font-style:normal;
+	font-weight:normal;
+	src:
+		url("/static/fonts/aAbsoluteEmpire.otf") format("opentype"),
+		url("/static/fonts/aAbsoluteEmpire.ttf") format("truetype");
+}
+
 a {
   border-radius: 2rem;
   color: var(--textcolor);
+  text-underline-offset: 0.5rem;
 }
 
 html,body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,
@@ -34,17 +54,23 @@ button,label {
 }
 
 body,button,input,table,textarea,select {
-  font: normal 1rem/1.7 "CaskaydiaCoveNerdFont-Regular";
+  font: normal 1rem/1.7 "Hack-Regular";
 }
 
 html,body {
   min-height: 100vh;
 }
 
+::selection {
+  background-color: hsl(46, 61%, 45%);
+  color: hsl(206, 43%, 8%);
+}
+
 h1 {
   text-shadow: var(--shadow);
   margin: auto;
   margin-left: 1rem;
+  font: normal 3rem/1 "aAbsoluteEmpire";
 }
 
 h1 ~ * {
@@ -223,7 +249,7 @@ h3 {
   border: 2px solid #ffd700;
   width: 100%;
   padding: 0.5rem;
-  margin: 0.6rem 0;
+  margin: 1.3rem 0;
 }
 
 .prompt {
@@ -313,6 +339,7 @@ embed {
 @media only screen and (max-width: 500px) {
   h1 {
     margin: 0;
+    padding: 0.6rem;
   }
 
   nav{
@@ -396,6 +423,7 @@ embed {
     h1 {
       margin: 0;
       text-align: center;
+      padding: 0.6rem;
     }
   
     header {
