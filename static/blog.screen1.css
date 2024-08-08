@@ -22,12 +22,11 @@ body {
 
 @font-face {
 	font-display:swap;
-	font-family:"aAbsoluteEmpire";
+	font-family:"autoradiographic";
 	font-style:normal;
 	font-weight:normal;
 	src:
-		url("/static/fonts/aAbsoluteEmpire.otf") format("opentype"),
-		url("/static/fonts/aAbsoluteEmpire.ttf") format("truetype");
+		url("/static/fonts/autoradiographic.rg-regular.otf") format("opentype");
 }
 
 a {
@@ -70,7 +69,7 @@ h1 {
   text-shadow: var(--shadow);
   margin: auto;
   margin-left: 1rem;
-  font: normal 3rem/1 "aAbsoluteEmpire";
+  font: normal 5rem/1 "autoradiographic";
 }
 
 h1 ~ * {
